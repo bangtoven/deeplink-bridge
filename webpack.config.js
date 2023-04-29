@@ -7,7 +7,7 @@ module.exports = {
     index: "./src/index.ts",
   },
   output: {
-    filename: "DeepLinkBridge.js",
+    filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     library: "DeepLinkBridge",
     libraryTarget: "umd",

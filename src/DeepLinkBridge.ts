@@ -41,6 +41,8 @@ export class DeepLinkBridge {
       const storageKey = `${this.storageKeyPrefix}callbackData`;
 
       const handleStorageEvent = (event: StorageEvent) => {
+        console.log("storage event on sendRequest", event);
+
         if (cancelToken && cancelToken.isCanceled) {
           window.removeEventListener("storage", handleStorageEvent);
           return;
@@ -56,10 +58,7 @@ export class DeepLinkBridge {
 
       window.addEventListener("storage", handleStorageEvent);
 
-      const url = `${this.callbackUrl}#deepLinkUrl=${encodeURIComponent(
-        deepLinkUrl
-      )}`;
-      const newWindow = window.open(url);
+      const newWindow = window.open(deepLinkUrl);
 
       // Fallback handling
       setTimeout(() => {

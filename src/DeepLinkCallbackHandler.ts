@@ -14,5 +14,7 @@ export function deepLinkCallbackHandler({
     const storageKey = `${storageKeyPrefix}callbackData`;
     localStorage.setItem(storageKey, responseData);
     window.close();
+  } else {
+    console.error("no response data found in url");
   }
 }
