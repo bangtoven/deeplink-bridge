@@ -8,14 +8,13 @@ export default function Home() {
   const deepLinkBridge = new DeepLinkBridge({
     callbackUrl: "http://localhost:3000/callback",
     storageKeyPrefix: "my-app",
-    fallbackUrl: "https://coinbase.com",
-    universalLinkUrl: "https://coinbase.com",
   });
 
   // onClick
   const onClick = async () => {
     console.log("onClick");
-    const url = "https://example.com/";
+    const url =
+      "my-wallet://request?callback_url=http://localhost:3000/callback";
 
     const response = await deepLinkBridge.sendRequest({
       deepLinkUrl: url,
