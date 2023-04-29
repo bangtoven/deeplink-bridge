@@ -2,16 +2,19 @@
   "name": "deep-link-bridge",
   "version": "0.0.1",
   "description": "bi-directional communication between web and native mobile via deep links",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "webpack",
     "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "author": "Jungho Bang",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@types/jest": "^29.5.1",
@@ -23,7 +26,10 @@
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
-    "typescript": "^5.0.4"
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
   },
   "dependencies": {}
 }

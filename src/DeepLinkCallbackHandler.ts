@@ -1,25 +1,18 @@
 interface DeepLinkCallbackHandlerOptions {
   storageKeyPrefix?: string;
+  paramKey?: string;
 }
 
-export function deepLinkCallbackHandler(
-  options: DeepLinkCallbackHandlerOptions
-): void {
-  const { storageKeyPrefix = "DeepLinkBridge:" } = options;
+export function deepLinkCallbackHandler({
+  storageKeyPrefix = "DeepLinkBridge:",
+  paramKey = "response_data",
+}: DeepLinkCallbackHandlerOptions): void {
+  const urlParams = new URLSearchParams(window.location.search);
+  const responseData = urlParams.get(paramKey);
 
-  const handleHashChange = () => {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const responseData = hashParams.get("response_data");
-
-    if (responseData) {
-      const storageKey = `${storageKeyPrefix}callbackData`;
-      localStorage.setItem(storageKey, responseData);
-      window.close();
-    }
-  };
-
-  window.addEventListener("hashchange", handleHashChange);
-
-  // Trigger the handler in case the page is loaded with the hash already in the URL
-  handleHashChange();
+  if (responseData) {
+    const storageKey = `${storageKeyPrefix}callbackData`;
+    localStorage.setItem(storageKey, responseData);
+    window.close();
+  }
 }
