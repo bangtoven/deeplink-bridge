@@ -4,7 +4,7 @@ export type CancelToken = {
 };
 
 type DeepLinkBridgeOptions = {
-  callbackUrl: string;
+  callbackPath: string;
   storageKeyPrefix?: string;
 };
 
@@ -14,12 +14,14 @@ type SendRequestOptions = {
 };
 
 export class DeepLinkBridge {
-  private callbackUrl: string;
+  private callbackPath: string;
   private storageKeyPrefix: string;
 
   constructor(options: DeepLinkBridgeOptions) {
-    const { callbackUrl, storageKeyPrefix = "DeepLinkBridge:" } = options;
-    this.callbackUrl = callbackUrl;
+    const { callbackPath = "callback", storageKeyPrefix = "DeepLinkBridge:" } =
+      options;
+
+    this.callbackPath = callbackPath;
     this.storageKeyPrefix = storageKeyPrefix;
   }
 
@@ -47,7 +49,13 @@ export class DeepLinkBridge {
 
       window.addEventListener("storage", handleStorageEvent);
 
-      window.open(deepLinkUrl);
+      const callbackUrl = new URL(window.location.href);
+      callbackUrl.pathname = this.callbackPath;
+
+      const url = new URL(deepLinkUrl);
+      url.searchParams.append("callback_url", callbackUrl.href);
+
+      window.open(url.href.toString(), "_blank");
 
       // // Fallback handling
       // setTimeout(() => {

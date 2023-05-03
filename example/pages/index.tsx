@@ -6,15 +6,14 @@ export default function Home() {
   const [response, setResponse] = useState<string | null>(null);
 
   const deepLinkBridge = new DeepLinkBridge({
-    callbackUrl: "http://localhost:3000/callback",
+    callbackPath: "/callback",
     storageKeyPrefix: "my-app",
   });
 
   // onClick
   const onClick = async () => {
     console.log("onClick");
-    const url =
-      "my-wallet://request?callback_url=http://localhost:3000/callback";
+    const url = "my-wallet://request?param=1";
 
     const response = await deepLinkBridge.sendRequest({
       deepLinkUrl: url,
