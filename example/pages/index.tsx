@@ -22,7 +22,7 @@ export default function Home() {
 
   const handleMakeRequestToMyWallet = async () => {
     console.log("onClick");
-    const url = "my-wallet://request?param=1";
+    const url = `my-wallet://request?param=${randomValue}`;
 
     try {
       const response = await deepLinkBridge.sendRequest({
