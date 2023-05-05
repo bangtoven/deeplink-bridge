@@ -24,5 +24,10 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    fallback: {
+      os: require.resolve("os-browserify/browser"),
+      buffer: require.resolve("buffer/"),
+      dgram: false,
+    },
   },
 };

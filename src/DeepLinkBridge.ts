@@ -1,4 +1,5 @@
-// DeepLinkBridge.ts
+import Bonjour, { Service } from "bonjour-service";
+
 export type CancelToken = {
   isCanceled: boolean;
 };
@@ -23,6 +24,25 @@ export class DeepLinkBridge {
 
     this.callbackPath = callbackPath;
     this.storageKeyPrefix = storageKeyPrefix;
+  }
+
+  public discoverRelayServer(): Promise<Service | null> {
+    return new Promise((resolve) => {
+      const instance = new Bonjour();
+      const browser = instance.find({ type: "MyWebSocketServer" });
+      browser.on("serviceUp", (service) => {
+        console.log("Service up:", service);
+        resolve(service);
+      });
+      browser.on("serviceDown", (service) => {
+        console.log("Service down:", service);
+      });
+      browser.start();
+      setTimeout(() => {
+        browser.stop();
+        resolve(null);
+      }, 5000);
+    });
   }
 
   public sendRequest(options: SendRequestOptions): Promise<unknown> {
