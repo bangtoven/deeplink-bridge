@@ -134,8 +134,7 @@ class WebSocketServerService : Service() {
         }
 
         override fun onMessage(conn: WebSocket, message: String) {
-            val origin = conn.remoteSocketAddress?.address?.hostAddress
-            Log.i(TAG, "Message received from $origin: $message")
+            Log.i(TAG, "Message received: $message")
             // Handle incoming messages here
         }
 
